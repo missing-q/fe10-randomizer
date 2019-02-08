@@ -1,0 +1,38 @@
+MultiBoot 1.0
+Written by Dack Jan/Feb 2009
+
+What is it?
+
+A small homebrew channel application based on the softchip R82 sources that
+allows for the starting of applications in any of the partitions on a multipartition
+disc.
+
+And that means?
+If, for example, you had several games stored in partitions on the disc then you would be able
+to start them individualy.
+
+Features:
+1. It boots all types of partitions from the disc
+2. Better than my usual ICON
+
+Limitations:
+1. How many partitions you can have on a disc. Nintendo have certain rules about the number
+   of partitions in the primary table (three), but seem to have no limits on tables 1 to 3.
+   If you create a disc with more than 3 partitions in the primary table then the disc is rejected
+   by the Wii.
+
+Bugs:
+1. Save games seem to have different slots to those created when booted from the disc channel.
+   They still all work.
+
+Credits:
+Most of the source is from Softchip R82. It also includes some techniques borrowed from
+'my toy' written by Wiipower.
+The rest is mine (the multipartition stuff)
+
+Thanks to:
+sr_corsario for testing
+
+Source code will be available at the drop.io/wiiscrubber address in the near future.
+
+Dack

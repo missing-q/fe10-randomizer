@@ -1,0 +1,11 @@
+To unscrub/patch the compressed iso:
+
+1. Click on "unscrub image"
+2. Select the scrubbed ISO e.g. m-mkwii(compress).iso
+3. Select the .DIF file to patch in e.g. m-mkwiifix.dif
+4. Select the name of the file you want to save as e.g. m-mkwiiFIXED.iso
+5. Wait.......
+6. (Make sure you have at least 4.5 Gig free on an NTFS formatted drive - there is a
+   limit of 4 Gig on FAT32 drives)
+7. Burn the newly created ISO
+
