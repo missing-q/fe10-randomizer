@@ -30,12 +30,23 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
     index = int(PIDS[1][1], 16)
     print(index)
     binary_file.seek(index,0)
-    block = int(PIDS[1][5], 16)
-    charblock = binary_file.read(block)
+
+    length = int(PIDS[1][5], 16)
+    charblock = binary_file.read(length)
 
     #grab character data
     print(PIDS[1][0])
-    growths = charblock.slice()
+    print("GROWTHS")
+    print("-------------------")
+    growths = bytearray(charblock[length-13:length-5])
+    for i in growths:
+        print(i)
 
-    print(format(charblock))
-    #for b in PIDS:
+    print("STATS")
+    print("-------------------")
+    stats = bytearray(charblock[length-23:length-13])
+    for i in stats:
+        print(i)
+
+    #print(format(charblock))
+    for b in PIDS:
