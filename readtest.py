@@ -41,12 +41,18 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
         print("-------------------")
         growths = bytearray(charblock[length-13:length-5])
         for i in growths:
-            print(i)
+            if i > 127:
+                print(i-256)
+            else:
+                print(i)
 
         print("\nSTATS")
         print("-------------------")
         stats = bytearray(charblock[length-23:length-13])
         for i in stats:
-            print(i)
+            if i > 127:
+                print(i-256)
+            else:
+                print(i)
 
         #print(format(charblock))
