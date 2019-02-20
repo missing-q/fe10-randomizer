@@ -1,4 +1,3 @@
-PID,Charblock Address,Label Address,Calculated Pointer,Hex String,Block Length (bytes)
 PID_IKE,0x34,0x03247E,0x03245E,00 03 24 5E,58
 PID_IZCA,0x8C,0x0324E9,0x0324C9,00 03 24 C9,54
 PID_ENA,0xE0,0x0322E9,0x0322C9,00 03 22 C9,60

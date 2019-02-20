@@ -26,27 +26,27 @@ with open('Assets/PIDS.csv', 'r') as f:
 with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
     #Go to beginning of file
     binary_file.seek(0, 0)
-    #Grab charblock
-    index = int(PIDS[1][1], 16)
-    print(index)
-    binary_file.seek(index,0)
-
-    length = int(PIDS[1][5], 16)
-    charblock = binary_file.read(length)
-
-    #grab character data
-    print(PIDS[1][0])
-    print("GROWTHS")
-    print("-------------------")
-    growths = bytearray(charblock[length-13:length-5])
-    for i in growths:
-        print(i)
-
-    print("STATS")
-    print("-------------------")
-    stats = bytearray(charblock[length-23:length-13])
-    for i in stats:
-        print(i)
-
-    #print(format(charblock))
     for b in PIDS:
+        #Grab charblock
+        index = int(b[1], 16)
+        #print(index)
+        binary_file.seek(index,0)
+
+        length = int(b[5], 16)
+        charblock = binary_file.read(length)
+
+        #grab character data
+        print("\n" + b[0])
+        print("\nGROWTHS")
+        print("-------------------")
+        growths = bytearray(charblock[length-13:length-5])
+        for i in growths:
+            print(i)
+
+        print("\nSTATS")
+        print("-------------------")
+        stats = bytearray(charblock[length-23:length-13])
+        for i in stats:
+            print(i)
+
+        #print(format(charblock))
