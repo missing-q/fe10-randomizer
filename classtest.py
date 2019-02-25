@@ -14,6 +14,7 @@ with open('Assets/JIDS.csv', 'r') as f:
   reader = csv.reader(f)
   JIDS = list(reader)
 
+#Weapon ranks list
 #JID row layout:
     #row[0] = JID_LABEL, to be printed out with the rest of the block information
     #row[1] = Classblock starting address
@@ -25,23 +26,24 @@ with open('Assets/JIDS.csv', 'r') as f:
 
 #okay, it's time y'allmst
 with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
-    def first_tier(b):
-        pass
-
-    def second_tier(b):
-        pass
-
-    def third_tier(b):
-        pass
-
-    options = {
-        1: first_tier,
-        2: second_tier,
-        3: third_tier
-    }
-
+    '''
     #Go to beginning of file
     binary_file.seek(0, 0)
+
+    #Grab classblock
+    index = int(JIDS[0][1], 16)
+    #print(index)
+    binary_file.seek(index,0)
+
+    length = int(JIDS[0][5], 16)
+    charblock = binary_file.read(length)
+    print(format(charblock))
+
+    growths = bytearray(charblock[length-24:length-16])
+    for i in growths:
+        print(i)
+    '''
+
     for b in JIDS:
         #Grab classblock
         index = int(b[1], 16)
@@ -51,8 +53,25 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
         length = int(b[5], 16)
         charblock = binary_file.read(length)
 
-        #grab class data, method depends on class tier
+        #grab class data
+        print("\n" + b[0])
 
-        #call funct based on class type
-        options[b[6]](b)
+        print("\nCAPS")
+        print("-------------------")
+        stats = bytearray(charblock[length-32:length-24])
+        for i in stats:
+            print(i)
         #print(format(charblock))
+
+        print("\nSTATS")
+        print("-------------------")
+        stats = bytearray(charblock[length-24:length-16])
+        for i in stats:
+            print(i)
+        #print(format(charblock))
+
+        print("\nGROWTHS")
+        print("-------------------")
+        growths = bytearray(charblock[length-16:length-8])
+        for i in growths:
+            print(i)
