@@ -10,6 +10,17 @@ def format(bytestring):
     formatted_hex = formatted_hex.upper()
     return(formatted_hex)
 
+#converts hex strings into an address the reader can check
+def toaddress(str):
+    val = int("0x" + str.replace(" ", "")) + 32 #adding offset nonsense
+    return val
+
+#reads until the next x00 byte, helpful for grabbing stuff from addresses
+def readuntilnull(file):
+    val = ""
+    while file.read(1) != b'/x00':
+        val += file.read(1)
+
 #import in PIDS
 with open('Assets/PIDS.csv', 'r') as f:
     reader = csv.reader(f)
@@ -32,5 +43,9 @@ with open("Test-Files/zmap/bmap0101/dispos_n.bin", "rb") as binary_file:
     index = int("0x28", 16) # character data starts around 0x28, I believe, & takes up 104 bytes
     binary_file.seek(index)
     length = 104
-    mapblock = binary_file.read(length)
-    print(format(mapblock))
+    for i in range(0,5):
+        mapblock = binary_file.read(length)
+        print(format(mapblock))
+        charid = format(mapblock[4:8])
+        print(charid)
+        print(toaddress(charid))
