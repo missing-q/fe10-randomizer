@@ -5,14 +5,20 @@ import binascii
 
 #format output funct
 def format(bytestring):
-    hexstring = binascii.hexlify(bytestring).decode('ascii')
-    escapecodes = map(''.join, zip(repeat(r' '), *[iter(hexstring)]*2))
-    print("'", *escapecodes, "'", sep='')
+    hex = str(binascii.hexlify(bytestring), 'ascii')
+    formatted_hex = ' '.join(hex[i:i+2] for i in range(0, len(hex), 2))
+    formatted_hex = formatted_hex.upper()
+    return(formatted_hex)
 
 #read in PIDs list
 with open('Assets/PIDS.csv', 'r') as f:
-  reader = csv.reader(f)
-  PIDS = list(reader)
+    reader = csv.reader(f)
+    PIDS = list(reader)
+
+ #import in JIDS list
+with open('Assets/JIDS.csv', 'r') as f:
+     reader = csv.reader(f)
+     JIDS = list(reader)
 
 #PID row layout:
     #row[0] = PID_LABEL, to be printed out with the rest of the block information
@@ -37,6 +43,14 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
 
         #grab character data
         print("\n" + b[0])
+        job = format(charblock[16:20])
+        #print(job)
+
+        for j in JIDS:
+            if job == j[4]:
+                print("\nClass: " + j[0])
+                break #just so it doesn't iterate over the entire JIDS file lol
+
         print("\nGROWTHS")
         print("-------------------")
         growths = bytearray(charblock[length-13:length-5])
