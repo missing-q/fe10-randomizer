@@ -22,7 +22,7 @@ def readuntilnull(file, addr):
         label.seek(addr,0)
         byte = label.read(1)
         while byte != b"/x00":
-            byte = f.read(1)
+            byte = label.read(1)
         return byte
 
 #import in PIDS
@@ -47,7 +47,7 @@ with open("Test-Files/zmap/bmap0101/dispos_n.bin", "rb") as binary_file:
     index = int("0x28", 16) # character data starts around 0x28, I believe, & takes up 104 bytes
     binary_file.seek(index)
     length = 104
-    for i in range(0,5):
+    for i in range(5):
         mapblock = binary_file.read(length)
         print(format(mapblock))
         charid = format(mapblock[4:8])
