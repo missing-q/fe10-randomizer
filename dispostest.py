@@ -2,6 +2,7 @@
 import csv
 from itertools import repeat
 import binascii
+import os
 
 #format output funct
 def format(bytestring):
@@ -12,14 +13,17 @@ def format(bytestring):
 
 #converts hex strings into an address the reader can check
 def toaddress(str):
-    val = int("0x" + str.replace(" ", "")) + 32 #adding offset nonsense
+    val = int("0x" + str.replace(" ", ""),16) + 32 #adding offset nonsense
     return val
 
 #reads until the next x00 byte, helpful for grabbing stuff from addresses
-def readuntilnull(file):
-    val = ""
-    while file.read(1) != b'/x00':
-        val += file.read(1)
+def readuntilnull(file, addr):
+    with open(file,'rb') as label:
+        label.seek(addr,0)
+        byte = label.read(1)
+        while byte != b"/x00":
+            byte = f.read(1)
+        return byte
 
 #import in PIDS
 with open('Assets/PIDS.csv', 'r') as f:
@@ -49,3 +53,6 @@ with open("Test-Files/zmap/bmap0101/dispos_n.bin", "rb") as binary_file:
         charid = format(mapblock[4:8])
         print(charid)
         print(toaddress(charid))
+        if (toaddress(charid) < os.path.getsize("Test-Files/zmap/bmap0101/dispos_n.bin")):
+            string = readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(charid))
+            print(string)
