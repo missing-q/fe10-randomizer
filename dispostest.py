@@ -17,13 +17,12 @@ def toaddress(str):
     return val
 
 #reads until the next x00 byte, helpful for grabbing stuff from addresses
-def readuntilnull(file, addr):
-    with open(file,'rb') as label:
-        label.seek(addr,0)
-        byte = label.read(1)
-        while byte != b"/x00":
-            byte = label.read(1)
-        return byte
+def readuntilnull(rfile, addr):
+    with open(rfile, 'rb') as l:
+        l.seek(addr,0)
+        s = l.read()
+        index = int(s.find(b'\x00'))
+        return s[0:index].decode("ascii")
 
 #import in PIDS
 with open('Assets/PIDS.csv', 'r') as f:
