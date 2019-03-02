@@ -11,3 +11,4 @@ A WIP randomizer for the game Fire Emblem: Radiant Dawn for the Wii. Warning- FE
 
 ## Research Notes
 During the process of making this randomizer, I've compiled several research notes on the internal structure of Radiant Dawn, including character block locations/lengths. They can be found [here](https://docs.google.com/spreadsheets/d/1SB0EZSW0u7tHKTgQv-fEJFDxgORcouMdmTTc9lZ0DHk/edit#gid=0).
+The vast majority of the research done on Radiant Dawn, including the basis for my own research, can be found in [this Serenes Forest thread](https://serenesforest.net/forums/index.php?/topic/18280-fe10-radiant-dawn-hacking-notes/). Thanks to VincentASM and everyone else who has contributed to the research done on Radiant Dawn!
