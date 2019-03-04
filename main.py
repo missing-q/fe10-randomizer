@@ -21,7 +21,7 @@ class Main(QWidget):
         #Button Stuff
 
         file = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
-
+        print(file)
         btn1 = QLabel("Seed", self)
         btn2 = QLineEdit("", self)
         btn3 = QPushButton("randomize", self)

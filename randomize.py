@@ -13,5 +13,5 @@ def randomizer(path):
             #print os.path.join(subdir, file)
             filepath = subdir + os.sep + file
             if filepath.endswith(".bin"):
-                #print(filepath)
+                print(filepath)
                 #randomizetest.r_dispos(filepath)
