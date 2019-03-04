@@ -3,6 +3,8 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+import randomizetest
+from functools import partial
 
 class Main(QWidget):
     def __init__(self, parent=None):
@@ -17,16 +19,20 @@ class Main(QWidget):
         self.setWindowIcon(QIcon('Assets/icon.gif'))
 
         #Button Stuff
-        btn1 = QPushButton("a", self)
-        #btn1.clicked.connect(randomize)
-        btn2 = QPushButton("b", self)
-        btn3 = QPushButton("c", self)
+
+        file = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
+
+        btn1 = QLabel("Seed", self)
+        btn2 = QLineEdit("", self)
+        btn3 = QPushButton("randomize", self)
+        #btn3.clicked.connect(partial(r_dispos,file)) #VERY DANGEROUS
 
         #GUI Stuff
         organize = QGridLayout()
         organize.addWidget(btn1, 1, 1)
-        organize.addWidget(btn2, 1, 2)
-        organize.addWidget(btn3, 1, 3)
+        organize.addWidget(btn2, 2, 1)
+        organize.addWidget(btn3, 3, 1)
+        organize.setColumnStretch(1,2)
         self.setLayout(organize)
 
 
