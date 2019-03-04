@@ -83,9 +83,33 @@ with open("Test-Files/zmap/bmap0101/dispos_n.bin", "rb") as binary_file:
             #--------------------
             for i in range(num):
                 mapblock = binary_file.read(104)
-                print(format(mapblock))
+                print("\n" + format(mapblock))
                 charid = format(mapblock[4:8])
                 print(charid)
                 print(toaddress(charid))
                 string = readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(charid))
-                print(string + "\n")
+                print(string)
+                #OKAY FINALLY
+                classid = format(mapblock[8:12])
+                print(readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(classid)))
+                #Weapons
+                print("-------------")
+                wep1 = format(mapblock[36:40])
+                print(readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(wep1)))
+                wep2 = format(mapblock[40:44])
+                print(readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(wep2)))
+                wep3 = format(mapblock[44:48])
+                print(readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(wep3)))
+                wep4 = format(mapblock[48:52])
+                print(readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(wep4)))
+
+                #Items
+                print("-------------")
+                wep1 = format(mapblock[52:56])
+                print(readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(wep1)))
+                wep2 = format(mapblock[56:60])
+                print(readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(wep2)))
+                wep3 = format(mapblock[60:64])
+                print(readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(wep3)))
+                wep4 = format(mapblock[68:72])
+                print(readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(wep4)))
