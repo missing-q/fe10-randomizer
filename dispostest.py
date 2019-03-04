@@ -3,6 +3,7 @@ import csv
 from itertools import repeat
 import binascii
 import os
+import struct
 
 #format output funct
 def format(bytestring):
@@ -41,8 +42,30 @@ with open('Assets/IIDS.csv', 'r') as f:
 
 #here we go boys
 with open("Test-Files/zmap/bmap0101/dispos_n.bin", "rb") as binary_file:
-    #Go to beginning of file
+    #Go to beginning of file, header info
     binary_file.seek(0, 0)
+    filesize = binary_file.read(4)
+    data_rsize = binary_file.read(4)
+    p1 = binary_file.read(4)
+    p2 = binary_file.read(4)
+
+    #convert to actual ints lmao
+    filesize = struct.unpack(">i", filesize)[0]
+    data_rsize = struct.unpack(">i", data_rsize)[0]
+    p1 = struct.unpack(">i", p1)[0]
+    p2 = struct.unpack(">i", p2)[0]
+
+    #offset stuff
+    dataregion = int("0x20",16)
+    pr1 = data_rsize + dataregion
+    pr2 = pr1 + (p1 * 4)
+    endregion = pr2 + (p2 * 8)
+
+    print(pr1)
+    print(pr2)
+    print(endregion)
+
+    #---------------
     index = int("0x28", 16) # character data starts around 0x28, I believe, & takes up 104 bytes
     binary_file.seek(index)
     length = 104
