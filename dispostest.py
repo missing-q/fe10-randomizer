@@ -1,9 +1,9 @@
 #REMEMBER- when appending new labels to the end of a file, be sure to update the first 4 bytes in the file header with the new file length.
 import csv
-from itertools import repeat
 import binascii
 import os
 import struct
+import io
 
 #format output funct
 def format(bytestring):
@@ -45,36 +45,47 @@ with open("Test-Files/zmap/bmap0101/dispos_n.bin", "rb") as binary_file:
     #Go to beginning of file, header info
     binary_file.seek(0, 0)
     filesize = binary_file.read(4)
-    data_rsize = binary_file.read(4)
+    d = binary_file.read(4)
     p1 = binary_file.read(4)
     p2 = binary_file.read(4)
 
     #convert to actual ints lmao
     filesize = struct.unpack(">i", filesize)[0]
-    data_rsize = struct.unpack(">i", data_rsize)[0]
+    d = struct.unpack(">i", d)[0]
     p1 = struct.unpack(">i", p1)[0]
     p2 = struct.unpack(">i", p2)[0]
 
     #offset stuff
-    dataregion = int("0x20",16)
-    pr1 = data_rsize + dataregion
-    pr2 = pr1 + (p1 * 4)
-    endregion = pr2 + (p2 * 8)
+    p_dataregion = 32
+    p_pr1 = d + p_dataregion
+    p_pr2 = p_pr1 + (p1 * 4)
+    p_endregion = p_pr2 + (p2 * 8)
 
-    print(pr1)
-    print(pr2)
-    print(endregion)
+    #grab file sections
+    binary_file.seek(0, 0)
+    header = binary_file.read(32)
+    dataregion = binary_file.read(d)
+    pointer_1 = binary_file.read(p1 * 4)
+    pointer_2 = binary_file.read(p2 * 8) #contains pointers to faction blocks
+    endregion = binary_file.read(filesize - p_endregion)
 
     #---------------
-    index = int("0x28", 16) # character data starts around 0x28, I believe, & takes up 104 bytes
-    binary_file.seek(index)
-    length = 104
-    for i in range(5):
-        mapblock = binary_file.read(length)
-        print(format(mapblock))
-        charid = format(mapblock[4:8])
-        print(charid)
-        print(toaddress(charid))
-        if (toaddress(charid) < os.path.getsize("Test-Files/zmap/bmap0101/dispos_n.bin")):
-            string = readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(charid))
-            print(string)
+    # first four bytes of the faction block seem to be # of units and total number of units and then two other bytes
+    factionr = io.BytesIO(pointer_2)
+    for i in range(p2):
+        addr = factionr.read(8)
+        #jump to faction block start
+        addr = struct.unpack(">i",addr[:4])[0]
+        if addr != 0:
+            binary_file.seek(addr + 32)
+            fct_header = binary_file.read(4)
+            num = fct_header[0]
+            #--------------------
+            for i in range(num):
+                mapblock = binary_file.read(104)
+                print(format(mapblock))
+                charid = format(mapblock[4:8])
+                print(charid)
+                print(toaddress(charid))
+                string = readuntilnull("Test-Files/zmap/bmap0101/dispos_n.bin", toaddress(charid))
+                print(string + "\n")
