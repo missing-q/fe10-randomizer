@@ -6,7 +6,7 @@ import struct
 import io
 import randomizedispos
 
-def randomizer(path):
+def randomizer(path, seed):
     #walk through every dispos file in dir
     for subdir, dirs, files in os.walk(path):
         for file in files:

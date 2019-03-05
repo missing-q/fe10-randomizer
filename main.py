@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import randomize
+import randomizedata
 from functools import partial
 
 class Main(QWidget):
@@ -25,7 +25,8 @@ class Main(QWidget):
         btn1 = QLabel("Seed", self)
         btn2 = QLineEdit("", self)
         btn3 = QPushButton("randomize", self)
-        btn3.clicked.connect(partial(randomize.randomizer,file)) #VERY DANGEROUS
+        arg = partial(randomizedata.randomizedata,file, 3)
+        btn3.clicked.connect(arg) #VERY DANGEROUS
 
         #GUI Stuff
         organize = QGridLayout()
