@@ -42,7 +42,7 @@ def randomizedata(file, seed):
         #row[5] = Block length, read this many bytes from the beginning of the block
 
     #okay, it's time y'allmst
-    with open(file + "/FE10Data.cms.decompressed", "rb") as binary_file:
+    with open(file + "/FE10Data.cms.decompressed", "rb+") as binary_file:
         #Go to beginning of file
         binary_file.seek(0, 0)
         for b in PIDS:
@@ -53,31 +53,48 @@ def randomizedata(file, seed):
 
             length = int(b[5], 16)
             charblock = binary_file.read(length)
-
             #grab character data
             print("\n" + b[0])
             job = charblock[16:20]
+            newjob = ""
             #print(job)
 
             for j in JIDS:
-                if job == j[4]:
+                if format(job) == j[4]:
                     print("\nClass: " + j[0])
 
                     for q in first_tier:
                         if j[0] == q:
                             newjob = random.choice(first_tier)
+                            while newjob in banned_classes:
+                                newjob = random.choice(first_tier)
+
                             print(newjob)
 
                     for q in second_tier:
                         if j[0] == q:
                             newjob = random.choice(second_tier)
+                            while newjob in banned_classes:
+                                newjob = random.choice(second_tier)
+
                             print(newjob)
 
                     for q in third_tier:
                         if j[0] == q:
                             newjob = random.choice(third_tier)
+                            while newjob in banned_classes:
+                                newjob = random.choice(first_tier)
+
                             print(newjob)
                     break #just so it doesn't iterate over the entire JIDS file lol
+
+            jobstr = b''
+            #iterate over JIDS again just to get the proper address for newjob
+            for j in JIDS:
+                if j[0] == newjob:
+                    jobstr = bytes.fromhex(j[4])
+            binary_file.seek(index + 16)
+            binary_file.write(jobstr)
 
             print("\nGROWTHS")
             print("-------------------")
