@@ -25,7 +25,7 @@ class Main(QWidget):
         btn1 = QLabel("Seed", self)
         btn2 = QLineEdit("", self)
         btn3 = QPushButton("randomize", self)
-        arg = partial(randomizedata.randomizedata,file, 3)
+        arg = partial(randomizedata.randomizedata,file, btn2.text())
         btn3.clicked.connect(arg) #VERY DANGEROUS
 
         #GUI Stuff
