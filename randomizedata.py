@@ -5,7 +5,6 @@ def randomizedata(file, seed):
     from itertools import repeat
     import binascii
     import random
-    import io
 
     #autogenned class tiers
     first_tier = ['JID_BLADE', 'JID_SOLDIER', 'JID_FIGHTER', 'JID_ARCHER', 'JID_LANCEARMOR', 'JID_AXARMOR', 'JID_SWORDARMOR', 'JID_SWORDARMOR_F', 'JID_THIEF', 'JID_BANDIT', 'JID_FIREMAGE', 'JID_THUNDERMAGE', 'JID_THUNDERMAGE_F', 'JID_WINDMAGE', 'JID_LIGHTMAGE', 'JID_PRIEST', 'JID_PRIEST_F', 'JID_SWORDKNIGHT', 'JID_LANCEKNIGHT', 'JID_LANCEKNIGHT_F', 'JID_AXEKNIGHT', 'JID_BOWKNIGHT', 'JID_PEGASUSKNIGHT', 'JID_DRAGONKNIGHT', 'JID_DRAGONKNIGHT_F', 'JID_BEASTTRIBE_L', 'JID_LION', 'JID_KINGLION_GI','JID_LION_GI', 'JID_KINGLION', 'JID_LION_CA', 'JID_BEASTTRIBE_T', 'JID_TIGER', 'JID_BEASTTRIBE_C', 'JID_CAT', 'JID_BEASTTRIBE_C/F', 'JID_CAT_F', 'JID_BEASTTRIBE_W', 'JID_WOLF', 'JID_QUEENWOLF', 'JID_WOLF_F', 'JID_BIRDTRIBE_H', 'JID_HAWK', 'JID_KINGHAWK', 'JID_HAWK_TI', 'JID_BIRDTRIBE_C', 'JID_CROW', 'JID_BIRDTRIBE_C/F', 'JID_CROW_F', 'JID_KINGCROW', 'JID_CROW_NA', 'JID_PRINCEEGRET', 'JID_EGRET', 'JID_PRINCEEGRET_RA', 'JID_EGRET_RA', 'JID_PRINCESSEGRET', 'JID_EGRET_LE', 'JID_DRAGONTRIBE_R', 'JID_REDDRAGON', 'JID_DRAGONTRIBE_R/F', 'JID_REDDRAGON_F', 'JID_DRAGONTRIBE_W', 'JID_WHITEDRAGON', 'JID_DRAGONKING', 'JID_BLACKDRAGON', 'JID_DRAGONPRINCE', 'JID_BLACKDRAGON_KU', 'JID_PILGRIM', 'JID_VENDOR_GOODS', 'JID_OLDMAN', 'JID_CITIZEN', 'JID_CITIZEN_F', 'JID_CHILD', 'JID_CHILD_F', 'JID_HORSE']
@@ -42,7 +41,7 @@ def randomizedata(file, seed):
         #row[4] = Hex string, deliminates beginning of charblock
         #row[5] = Block length, read this many bytes from the beginning of the block
 
-    #IT'S TIME
+    #okay, it's time y'allmst
     with open(file + "/FE10Data.cms.decompressed", "rb") as binary_file:
         #Go to beginning of file
         binary_file.seek(0, 0)
@@ -53,21 +52,32 @@ def randomizedata(file, seed):
             binary_file.seek(index,0)
 
             length = int(b[5], 16)
+            charblock = binary_file.read(length)
 
+            #grab character data
             print("\n" + b[0])
-
-            charblock = io.BytesIO(binary_file.read(length))
-            charblock.read(16)
-            job = random.choice(PIDS)
-
-            for i in banned_classes:
-                while job[0] == i:
-                    job = random.choice(PIDS)
-
-            print(job)
-
+            job = charblock[16:20]
             #print(job)
 
+            for j in JIDS:
+                if job == j[4]:
+                    print("\nClass: " + j[0])
+
+                    for q in first_tier:
+                        if j[0] == q:
+                            newjob = random.choice(first_tier)
+                            print(newjob)
+
+                    for q in second_tier:
+                        if j[0] == q:
+                            newjob = random.choice(second_tier)
+                            print(newjob)
+
+                    for q in third_tier:
+                        if j[0] == q:
+                            newjob = random.choice(third_tier)
+                            print(newjob)
+                    break #just so it doesn't iterate over the entire JIDS file lol
 
             print("\nGROWTHS")
             print("-------------------")
