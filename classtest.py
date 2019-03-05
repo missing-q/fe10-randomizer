@@ -43,7 +43,11 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
     for i in growths:
         print(i)
     '''
+    first_tier = []
+    second_tier = []
+    third_tier = []
 
+    banned_classes = []
     for b in JIDS:
         #Grab classblock
         index = int(b[1], 16)
@@ -75,3 +79,19 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
         growths = bytearray(charblock[length-16:length-8])
         for i in growths:
             print(i)
+
+        if charblock.find(b'\x00\x03\x37\x83') != -1:
+            print("3rd tier")
+            third_tier.append(b[0])
+        elif charblock.find(b'\x00\x03\x37\x78') != -1:
+            print("2nd tier")
+            second_tier.append(b[0])
+        else:
+            print("1st tier")
+            first_tier.append(b[0])
+
+        if charblock.find(b'\x00\x03\x38\x36') != -1:
+            print("Transformed class")
+            banned_classes.append(b[0])
+            
+    print(banned_classes)
