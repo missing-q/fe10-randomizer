@@ -52,8 +52,12 @@ class Main(QWidget):
         layout2.addWidget(btn11)
         group2.setLayout(layout2)
 
-        arg = partial(randomizedata.randomizedata,file, btn2.text())
-        btn3.clicked.connect(arg) #VERY DANGEROUS
+        arg = partial(randomizedata.randomizedata,file, btn2.text(), {'Variance': btn5.text()})
+        def grab():
+            print(btn2.text())
+            randomizedata.randomizedata(file, btn2.text(), {'Variance': btn5.text()})
+            
+        btn3.clicked.connect(grab) #VERY DANGEROUS
 
         #GUI Stuff
         organize = QGridLayout()

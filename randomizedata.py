@@ -1,4 +1,4 @@
-def randomizedata(file, seed):
+def randomizedata(file, seed, args):
 
     #here we go boys
     import csv
@@ -42,6 +42,7 @@ def randomizedata(file, seed):
         #row[5] = Block length, read this many bytes from the beginning of the block
 
     #okay, it's time y'allmst
+    '''
     with open(file + "/FE10Data.cms.decompressed", "rb+") as binary_file:
         #Go to beginning of file
         binary_file.seek(0, 0)
@@ -115,3 +116,4 @@ def randomizedata(file, seed):
                     print(i)
 
             #print(format(charblock))
+    '''
