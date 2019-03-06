@@ -43,6 +43,9 @@ class Main(QWidget):
         layout.addWidget(btn9)
         group1.setLayout(layout)
 
+        intrestrict = QIntValidator(0, 99, self)
+        btn5.setValidator(intrestrict)
+
         group2 = QGroupBox("Options", self)
         btn10 = QCheckBox("Lock characters to class tier")
         btn11 = QCheckBox("Add nonplayables to class pool with randomized weapons")
@@ -56,7 +59,7 @@ class Main(QWidget):
         def grab():
             print(btn2.text())
             randomizedata.randomizedata(file, btn2.text(), {'Variance': btn5.text()})
-            
+
         btn3.clicked.connect(grab) #VERY DANGEROUS
 
         #GUI Stuff

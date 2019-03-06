@@ -33,6 +33,7 @@ def randomizedata(file, seed, args):
         JIDS = list(reader)
 
     random.seed(seed)
+    var = int(args["Variance"])
     #PID row layout:
         #row[0] = PID_LABEL, to be printed out with the rest of the block information
         #row[1] = Charblock starting address
@@ -97,13 +98,10 @@ def randomizedata(file, seed, args):
             binary_file.write(jobstr)
 
             print("\nGROWTHS")
-            print("-------------------")
+            print("-------------------")nce
             growths = bytearray(charblock[length-13:length-5])
             for i in growths:
-                if i > 127:
-                    print(i-256)
-                else:
-                    print(i)
+                mod = var * int(i, 16)
 
             print("\nSTATS")
             print("-------------------")
