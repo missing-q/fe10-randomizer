@@ -24,7 +24,15 @@ class Main(QWidget):
         print(file)
         btn1 = QLabel("Seed", self)
         btn2 = QLineEdit("", self)
-        btn3 = QPushButton("randomize", self)
+        btn3 = QPushButton("Randomize!", self)
+
+        group1 = QGroupBox("Parameters", self)
+
+        btn4 = QLabel("% Variance", group1)
+        btn5 = QLineEdit("", group1)
+
+        group2 = QGroupBox("Options", self)
+
         arg = partial(randomizedata.randomizedata,file, btn2.text())
         btn3.clicked.connect(arg) #VERY DANGEROUS
 
@@ -32,7 +40,8 @@ class Main(QWidget):
         organize = QGridLayout()
         organize.addWidget(btn1, 1, 1)
         organize.addWidget(btn2, 2, 1)
-        organize.addWidget(btn3, 3, 1)
+        organize.addWidget(group1, 3, 1)
+        organize.addWidget(group2, 3, 2)
         organize.setColumnStretch(1,2)
         self.setLayout(organize)
 
