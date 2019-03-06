@@ -15,7 +15,7 @@ class Main(QWidget):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-        self.setWindowTitle('FE9 Randomizer')
+        self.setWindowTitle('FE10 Randomizer')
         self.setWindowIcon(QIcon('Assets/icon.gif'))
 
         #Button Stuff
@@ -27,11 +27,30 @@ class Main(QWidget):
         btn3 = QPushButton("Randomize!", self)
 
         group1 = QGroupBox("Parameters", self)
-
         btn4 = QLabel("% Variance", group1)
         btn5 = QLineEdit("", group1)
+        btn6 = QCheckBox("Randomize lords?")
+        btn7 = QCheckBox("Randomize skills?")
+        btn8 = QCheckBox("Randomize weapon stats?")
+        btn9 = QCheckBox("Randomize weapon effects?")
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(btn4)
+        layout.addWidget(btn5)
+        layout.addWidget(btn6)
+        layout.addWidget(btn7)
+        layout.addWidget(btn8)
+        layout.addWidget(btn9)
+        group1.setLayout(layout)
 
         group2 = QGroupBox("Options", self)
+        btn10 = QCheckBox("Lock characters to class tier")
+        btn11 = QCheckBox("Add nonplayables to class pool with randomized weapons")
+
+        layout2 = QVBoxLayout(self)
+        layout2.addWidget(btn10)
+        layout2.addWidget(btn11)
+        group2.setLayout(layout2)
 
         arg = partial(randomizedata.randomizedata,file, btn2.text())
         btn3.clicked.connect(arg) #VERY DANGEROUS
@@ -39,9 +58,10 @@ class Main(QWidget):
         #GUI Stuff
         organize = QGridLayout()
         organize.addWidget(btn1, 1, 1)
-        organize.addWidget(btn2, 2, 1)
-        organize.addWidget(group1, 3, 1)
-        organize.addWidget(group2, 3, 2)
+        organize.addWidget(btn2, 1, 2)
+        organize.addWidget(group1, 2, 1)
+        organize.addWidget(group2, 2, 2)
+        organize.addWidget(btn3, 3, 1)
         organize.setColumnStretch(1,2)
         self.setLayout(organize)
 
