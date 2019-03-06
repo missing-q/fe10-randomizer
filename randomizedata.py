@@ -98,18 +98,30 @@ def randomizedata(file, seed, args):
             binary_file.write(jobstr)
 
             print("\nGROWTHS")
-            print("-------------------")nce
+            print("-------------------")
             growths = bytearray(charblock[length-13:length-5])
             for i in growths:
-                mod = var * int(i, 16)
+                mod = var * i
+                addend = random.randint(-1 * mod, mod)
+                print(addend)
+                result = i + addend
+                i = result
+                print(result)
+            print(growths)
+            binary_file.seek(index + (length-13), 0)
+            binary_file.write(growths)
 
             print("\nSTATS")
             print("-------------------")
             stats = bytearray(charblock[length-23:length-13])
             for i in stats:
-                if i > 127:
-                    print(i-256)
-                else:
-                    print(i)
-
+                mod = var * i
+                addend = random.randint(-1 * mod, mod)
+                print(addend)
+                result = i + addend
+                i = result
+                print(result)
+            print(stats)
+            binary_file.seek(index + (length-23), 0)
+            binary_file.write(stats)
             #print(format(charblock))
