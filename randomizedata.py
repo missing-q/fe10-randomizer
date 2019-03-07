@@ -100,28 +100,14 @@ def randomizedata(file, seed, args):
             print("\nGROWTHS")
             print("-------------------")
             growths = bytearray(charblock[length-13:length-5])
-            for i in growths:
-                mod = var * i
-                addend = random.randint(-1 * mod, mod)
-                print(addend)
-                result = i + addend
-                i = result
-                print(result)
-            print(growths)
+            growths = [] #list comprehension nonsense
             binary_file.seek(index + (length-13), 0)
-            binary_file.write(growths)
+            binary_file.write(gwrite)
 
             print("\nSTATS")
             print("-------------------")
             stats = bytearray(charblock[length-23:length-13])
-            for i in stats:
-                mod = var * i
-                addend = random.randint(-1 * mod, mod)
-                print(addend)
-                result = i + addend
-                i = result
-                print(result)
-            print(stats)
+            stats = bytearray()
             binary_file.seek(index + (length-23), 0)
-            binary_file.write(stats)
+            binary_file.write(swrite)
             #print(format(charblock))
