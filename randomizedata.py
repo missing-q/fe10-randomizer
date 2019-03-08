@@ -33,7 +33,9 @@ def randomizedata(file, seed, args):
         JIDS = list(reader)
 
     random.seed(seed)
-    var = int(args["Variance"])
+    print(args)
+    var = int(args["Variance"]) / 100
+    print(var)
     #PID row layout:
         #row[0] = PID_LABEL, to be printed out with the rest of the block information
         #row[1] = Charblock starting address
@@ -100,14 +102,20 @@ def randomizedata(file, seed, args):
             print("\nGROWTHS")
             print("-------------------")
             growths = bytearray(charblock[length-13:length-5])
-            growths = [] #list comprehension nonsense
-            binary_file.seek(index + (length-13), 0)
-            binary_file.write(gwrite)
+            gtemp = []
+            for i in growths:
+                mod = round(i * var) #grab percentage
+                temp = random.randint(-1 * mod, mod)
+                print(temp)
+                gtemp.append(temp)
+            print(gtemp)
+            #binary_file.seek(index + (length-13), 0)
+            #binary_file.write(gwrite)
 
             print("\nSTATS")
             print("-------------------")
             stats = bytearray(charblock[length-23:length-13])
             stats = bytearray()
-            binary_file.seek(index + (length-23), 0)
-            binary_file.write(swrite)
+            #binary_file.seek(index + (length-23), 0)
+            #binary_file.write(swrite)
             #print(format(charblock))
