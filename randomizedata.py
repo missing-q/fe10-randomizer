@@ -32,6 +32,11 @@ def randomizedata(file, seed, args):
         reader = csv.reader(f)
         JIDS = list(reader)
 
+    #import in IIDS list
+    with open('Assets/IIDS.csv', 'r') as f:
+        reader = csv.reader(f)
+        IIDS = list(reader)
+
     random.seed(seed)
     print(args)
     var = int(args["Variance"]) / 100
@@ -207,5 +212,44 @@ def randomizedata(file, seed, args):
             print(gtemp)
             binary_file.seek(index + (length-16), 0)
             binary_file.write(bytearray(gtemp))
+
+        #Item stuff
+        binary_file.seek(0, 0)
+        print("WEAPON RANDOMIZATIONS")
+        print("##################################################")
+        print("##################################################")
+
+        wepdelimiter = false #i'm iterating over the actual objects so this is what i get
+        if (args["Stats"]):
+            for b in IIDS:
+                #Grab classblock
+                index = int(b[1], 16)
+                #print(index)
+                binary_file.seek(index,0)
+
+                length = int(b[5], 16)
+                itemblock = binary_file.read(length)
+
+                #grab class data
+                print("\n" + b[0])
+                print("-----------------------")
+                #Mt and stuff starts at byte 40 of the itemblock
+                mt = itemblock[40]
+                hit = itemblock[41]
+                crit = itemblock[42]
+                wt = itemblock[43]
+                uses = itemblock[44]
+                wexp = itemblock[45]
+                min = itemblock[46]
+                max = itemblock[47]
+
+                #delimiter setter, I have no idea what this actually is but it's right before staves so
+                if b[0] == "IID_FLUTTER":
+                    wepdelimiter = true
+
+                #randomizer time
+                if (!wepdelimiter){
+                    
+                }
 
         #Misc: Zero out all instances of "EVENT-CC"
