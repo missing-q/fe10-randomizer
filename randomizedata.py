@@ -46,8 +46,12 @@ def randomizedata(file, seed, args):
 
     #okay, it's time y'allmst
     with open(file + "/FE10Data.cms.decompressed", "rb+") as binary_file:
+        #CHARACTER STUFF
         #Go to beginning of file
         binary_file.seek(0, 0)
+        print("CHARACTER RANDOMIZATIONS")
+        print("##################################################")
+        print("##################################################")
         for b in PIDS:
             #Grab charblock
             index = int(b[1], 16)
@@ -133,3 +137,75 @@ def randomizedata(file, seed, args):
             binary_file.seek(index + (length-23), 0)
             binary_file.write(bytearray(stemp))
             #print(format(charblock))
+
+
+        #CLASS STUFF
+        binary_file.seek(0, 0)
+        print("CLASS RANDOMIZATIONS")
+        print("##################################################")
+        print("##################################################")
+        #NICE
+        for b in JIDS:
+            #Grab classblock
+            index = int(b[1], 16)
+            #print(index)
+            binary_file.seek(index,0)
+
+            length = int(b[5], 16)
+            charblock = binary_file.read(length)
+
+            #grab class data
+            print("\n" + b[0])
+
+            print("\nCAPS")
+            print("-------------------")
+            caps = bytearray(charblock[length-32:length-24])
+            ctemp = []
+            for i in caps:
+                mod = round(i * var) #grab percentage
+                #print(mod)
+                temp = i + random.randint(-1 * mod, mod)
+                if temp < 0:
+                    temp = 0
+                print(temp)
+                ctemp.append(temp)
+            binary_file.seek(index + (length-32), 0)
+            binary_file.write(bytearray(ctemp))
+            #print(format(charblock))
+
+            print("\nSTATS")
+            print("-------------------")
+            stats = bytearray(charblock[length-24:length-16])
+            stemp = []
+            for i in stats:
+                mod = round(i * var) #grab percentage
+                #print(mod)
+                temp = i + random.randint(-1 * mod, mod)
+                if temp < 0:
+                    temp = 0
+                if temp > 255:
+                    temp = 0;
+                print(temp)
+                stemp.append(temp)
+            print(stemp)
+            binary_file.seek(index + (length-24), 0)
+            binary_file.write(bytearray(stemp))
+            #print(format(charblock))
+
+            print("\nGROWTHS")
+            print("-------------------")
+            growths = bytearray(charblock[length-16:length-8])
+            gtemp = []
+            for i in growths:
+                mod = round(i * var) #grab percentage
+                #print(mod)
+                temp = i + random.randint(-1 * mod, mod)
+                if temp < 0:
+                    temp = 0
+                print(temp)
+                gtemp.append(temp)
+            print(gtemp)
+            binary_file.seek(index + (length-16), 0)
+            binary_file.write(bytearray(gtemp))
+
+        #Misc: Zero out all instances of "EVENT-CC"
