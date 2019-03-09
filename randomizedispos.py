@@ -26,12 +26,11 @@ def r_dispos(filename, args, index):
             index = int(s.find(b'\x00'))
             return s[0:index].decode("ascii")
 
-    def appendtoend(rfile, label, sum):
+    def appendtoend(rfile, label):
         with open(rfile, 'ab+') as l:
             l.seek(0,2)
             length = len(label.encode("utf8")) + 1
             l.write(bytes(label, "ascii") + b'\x00')
-            sum += length
             l.seek(0,2)
             return l.tell() - length
 
@@ -104,7 +103,7 @@ def r_dispos(filename, args, index):
                     for char in index:
                         if string == char[0]:
                             newjob = char[1]
-                            newadd = appendtoend(filename, char[1], filesize) - 32
+                            newadd = appendtoend(filename, char[1]) - 32
                             classstr = struct.pack(">l",newadd)
                             print(classstr)
                             charext = True
@@ -112,11 +111,11 @@ def r_dispos(filename, args, index):
                     if charext:
                         #write class
                         binary_file.seek(binary_file.tell()-104,0)
-                        binary_file.read(4)
-                        binary_file.write(classstr)
+                        binary_file.read(8)
+                        binary_file.write(classstr) #count as indexing 4 bytes, remember
 
                         #jump back
-                        binary_file.seek(96,1)
+                        binary_file.seek(92,1)
                         #OKAY FINALLY
                         print(newjob)
                     else:
@@ -142,3 +141,8 @@ def r_dispos(filename, args, index):
                     print(readuntilnull(filename, toaddress(wep3)))
                     wep4 = format(mapblock[68:72])
                     print(readuntilnull(filename, toaddress(wep4)))
+        #write new filesize to file
+        filesize = os.path.getsize(filename)
+
+        binary_file.seek(0,0)
+        binary_file.write(struct.pack(">l",filesize))
