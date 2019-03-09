@@ -106,16 +106,28 @@ def randomizedata(file, seed, args):
             for i in growths:
                 mod = round(i * var) #grab percentage
                 temp = random.randint(-1 * mod, mod)
+                if temp < 0:
+                    temp = 0
                 print(temp)
                 gtemp.append(temp)
             print(gtemp)
-            #binary_file.seek(index + (length-13), 0)
-            #binary_file.write(gwrite)
+            binary_file.seek(index + (length-13), 0)
+            binary_file.write(bytearray(gtemp))
 
             print("\nSTATS")
             print("-------------------")
             stats = bytearray(charblock[length-23:length-13])
-            stats = bytearray()
+            stemp = []
+            for i in growths:
+                mod = round(i * var) #grab percentage
+                temp = random.randint(-1 * mod, mod)
+                if temp < 0:
+                    temp = 0
+                print(temp)
+                stemp.append(temp)
+            print(stemp)
+            binary_file.seek(index + (length-23), 0)
+            binary_file.write(bytearray(stemp))
             #binary_file.seek(index + (length-23), 0)
             #binary_file.write(swrite)
             #print(format(charblock))
