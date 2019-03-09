@@ -29,8 +29,8 @@ def r_dispos(filename, args, index):
     def appendtoend(rfile, label, sum):
         with open(rfile, 'ab+') as l:
             l.seek(0,2)
-            length = len(label.encode("utf8")) + 2
-            l.write(b'\x00' + bytes(label, "ascii") + b'\x00')
+            length = len(label.encode("utf8")) + 1
+            l.write(bytes(label, "ascii") + b'\x00')
             sum += length
             l.seek(0,2)
             return l.tell() - length
