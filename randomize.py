@@ -9,7 +9,10 @@ import randomizedata
 
 def randomizer(path, seed, args):
     character_index = randomizedata.randomizedata(args)
+    randomizetest.r_dispos(path + "/zmap/bmap0101/dispos_n.bin", args, character_index)
+    
     #walk through every dispos file in dir
+    '''
     for subdir, dirs, files in os.walk(path):
         for file in files:
             #print os.path.join(subdir, file)
@@ -17,3 +20,5 @@ def randomizer(path, seed, args):
             if filepath.endswith(".bin"):
                 print(filepath)
                 #randomizetest.r_dispos(filepath, args, character_index)
+
+    '''

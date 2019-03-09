@@ -6,6 +6,8 @@ def r_dispos(filename, args, index):
     import struct
     import io
 
+    sum = 0
+
     #format output funct
     def format(bytestring):
         hex = str(binascii.hexlify(bytestring), 'ascii')
@@ -26,6 +28,20 @@ def r_dispos(filename, args, index):
             index = int(s.find(b'\x00'))
             return s[0:index].decode("ascii")
 
+    #more garbage nonsense
+    def findstring(rfile, str):
+        with open(rfile, 'rb') as l:
+            s = l.read()
+            index = int(s.find(str))
+            return index
+
+    def appendtoend(rfile, label):
+        with open(rfile, 'ab+') as l:
+            l.seek(0,2)
+            length = len(label.encode("utf8")) + 2
+            l.write(b'\x00' + bytes(label, "ascii") + b'\x00')
+            sum += length
+
     #import in PIDS
     with open('Assets/PIDS.csv', 'r') as f:
         reader = csv.reader(f)
@@ -42,7 +58,7 @@ def r_dispos(filename, args, index):
         IIDS = list(reader)
 
         #here we go boys
-    with open(filename, "rb") as binary_file:
+    with open(filename, "rb+") as binary_file:
         #Go to beginning of file, header info
         binary_file.seek(0, 0)
         filesize = binary_file.read(4)
@@ -86,10 +102,21 @@ def r_dispos(filename, args, index):
                     mapblock = binary_file.read(104)
                     #print("\n" + format(mapblock))
                     charid = format(mapblock[4:8])
-                    print(charid)
-                    print(toaddress(charid))
                     string = readuntilnull(filename, toaddress(charid))
-                    print(string)
+                    charcheck = False
+
+                    for char in index:
+                        if string == char[0]: #does the character match an already randomized one?
+                            charcheck = True
+                            binary_file.seek(binary_file.tell() - 104, 0)
+                            binary_file.read(4)
+                            appendtoend(filename, char[1])
+                            addr = findstring(char[1]) + 32
+                            print(bytes(addr))
+                            binary_file.write(bytes(addr))
+
+
+
                     #OKAY FINALLY
                     classid = format(mapblock[8:12])
                     print(readuntilnull(filename, toaddress(classid)))
