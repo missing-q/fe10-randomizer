@@ -230,26 +230,30 @@ def randomizedata(file, seed, args):
                 length = int(b[5], 16)
                 itemblock = binary_file.read(length)
 
-                #grab class data
+                #grab item data
                 print("\n" + b[0])
                 print("-----------------------")
                 #Mt and stuff starts at byte 40 of the itemblock
-                mt = itemblock[40]
-                hit = itemblock[41]
-                crit = itemblock[42]
-                wt = itemblock[43]
-                uses = itemblock[44]
-                wexp = itemblock[45]
-                min = itemblock[46]
-                max = itemblock[47]
-
+                #mt, hit, crit, wt, uses, wexp, min range, max range
+                stats = [int(itemblock[40]), int(itemblock[41]), int(itemblock[42]), int(itemblock[43]), int(itemblock[44]), int(itemblock[45]), int(itemblock[46]), int(itemblock[47])]
+                temp = []
                 #delimiter setter, I have no idea what this actually is but it's right before staves so
                 if b[0] == "IID_FLUTTER":
                     wepdelimiter = true
 
                 #randomizer time
                 if (!wepdelimiter){
-                    
+                    for i in stats:
+                        mod = i + random.randint(-1 * round(i * var), round(i * var))
+                        temp.append(mod)
+                        if mod <= 0:
+                            mod = 1
+                    stats = temp
+                    if stats[6] > stats[7]:
+                        stats[7] = stats[6]
+                        
+                    print(stats)
                 }
+
 
         #Misc: Zero out all instances of "EVENT-CC"
