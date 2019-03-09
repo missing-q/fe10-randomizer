@@ -219,8 +219,8 @@ def randomizedata(file, seed, args):
         print("##################################################")
         print("##################################################")
 
-        wepdelimiter = false #i'm iterating over the actual objects so this is what i get
-        if (args["Stats"]):
+        wepdelimiter = False #i'm iterating over the actual objects so this is what i get
+        if args["Stats"] == True:
             for b in IIDS:
                 #Grab classblock
                 index = int(b[1], 16)
@@ -238,22 +238,25 @@ def randomizedata(file, seed, args):
                 stats = [int(itemblock[40]), int(itemblock[41]), int(itemblock[42]), int(itemblock[43]), int(itemblock[44]), int(itemblock[45]), int(itemblock[46]), int(itemblock[47])]
                 temp = []
                 #delimiter setter, I have no idea what this actually is but it's right before staves so
-                if b[0] == "IID_FLUTTER":
-                    wepdelimiter = true
+                if b[0] == "IID_SPRT_HEAL_SP":
+                    wepdelimiter = True
 
                 #randomizer time
-                if (!wepdelimiter){
+                if wepdelimiter != True:
                     for i in stats:
                         mod = i + random.randint(-1 * round(i * var), round(i * var))
-                        temp.append(mod)
                         if mod <= 0:
                             mod = 1
+                        if mod > 255: #somewhat more reasonably, weapon stats are unsigned
+                            mod = 255
+                        temp.append(mod)
                     stats = temp
                     if stats[6] > stats[7]:
                         stats[7] = stats[6]
-                        
+
                     print(stats)
-                }
+                    binary_file.seek(index + 40)
+                    binary_file.write(bytearray(stats))
 
 
         #Misc: Zero out all instances of "EVENT-CC"
