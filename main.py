@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import randomizedata
+import randomizer
 from functools import partial
 
 class Main(QWidget):
@@ -57,7 +57,7 @@ class Main(QWidget):
 
         def grab():
             print(btn2.text())
-            randomizedata.randomizedata(file, btn2.text(), {'Variance': btn5.text(), 'Lords': btn6.isChecked(), 'Skills' : btn7.isChecked(), 'Stats': btn8.isChecked(), 'Effects': btn9.isChecked()})
+            randomize.randomizer(file, btn2.text(), {'Variance': btn5.text(), 'Lords': btn6.isChecked(), 'Skills' : btn7.isChecked(), 'Stats': btn8.isChecked(), 'Effects': btn9.isChecked()})
 
         btn3.clicked.connect(grab) #VERY DANGEROUS
 

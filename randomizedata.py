@@ -41,6 +41,7 @@ def randomizedata(file, seed, args):
     print(args)
     var = int(args["Variance"]) / 100
     print(var)
+    returnval = []
     #PID row layout:
         #row[0] = PID_LABEL, to be printed out with the rest of the block information
         #row[1] = Charblock starting address
@@ -82,6 +83,7 @@ def randomizedata(file, seed, args):
                                 newjob = random.choice(first_tier)
 
                             print(newjob)
+                            returnval.append([b[0], newjob])
 
                     for q in second_tier:
                         if j[0] == q:
@@ -90,6 +92,7 @@ def randomizedata(file, seed, args):
                                 newjob = random.choice(second_tier)
 
                             print(newjob)
+                            returnval.append([b[0], newjob])
 
                     for q in third_tier:
                         if j[0] == q:
@@ -98,6 +101,7 @@ def randomizedata(file, seed, args):
                                 newjob = random.choice(first_tier)
 
                             print(newjob)
+                            returnval.append([b[0], newjob])
                     break #just so it doesn't iterate over the entire JIDS file lol
 
             jobstr = b''
@@ -260,3 +264,23 @@ def randomizedata(file, seed, args):
 
 
         #Misc: Zero out all instances of "EVENT-CC"
+        binary_file.seek(0,0)
+        if args["Lords"] == True:
+            binary_file.seek(37552, 0)
+            binary_file.write(b'\x00\x00\x00\x00')
+
+            binary_file.seek(41964, 0)
+            binary_file.write(b'\x00\x00\x00\x00')
+
+            binary_file.seek(43108, 0)
+            binary_file.write(b'\x00\x00\x00\x00')
+
+            binary_file.seek(43808, 0)
+            binary_file.write(b'\x00\x00\x00\x00')
+
+            binary_file.seek(57108, 0)
+            binary_file.write(b'\x00\x00\x00\x00')
+
+
+    #return character array for use in dispos
+    return returnval

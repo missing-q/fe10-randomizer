@@ -5,8 +5,10 @@ import os
 import struct
 import io
 import randomizedispos
+import randomizedata
 
-def randomizer(path, seed):
+def randomizer(path, seed, args):
+    character_index = randomizedata.randomizedata(args)
     #walk through every dispos file in dir
     for subdir, dirs, files in os.walk(path):
         for file in files:
@@ -14,4 +16,4 @@ def randomizer(path, seed):
             filepath = subdir + os.sep + file
             if filepath.endswith(".bin"):
                 print(filepath)
-                #randomizetest.r_dispos(filepath)
+                #randomizetest.r_dispos(filepath, args, character_index)
