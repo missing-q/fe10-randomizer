@@ -6,8 +6,6 @@ def r_dispos(filename, args, index):
     import struct
     import io
 
-    sum = 0
-
     #format output funct
     def format(bytestring):
         hex = str(binascii.hexlify(bytestring), 'ascii')
@@ -28,19 +26,14 @@ def r_dispos(filename, args, index):
             index = int(s.find(b'\x00'))
             return s[0:index].decode("ascii")
 
-    #more garbage nonsense
-    def findstring(rfile, str):
-        with open(rfile, 'rb') as l:
-            s = l.read()
-            index = int(s.find(str))
-            return index
-
-    def appendtoend(rfile, label):
+    def appendtoend(rfile, label, sum):
         with open(rfile, 'ab+') as l:
             l.seek(0,2)
             length = len(label.encode("utf8")) + 2
             l.write(b'\x00' + bytes(label, "ascii") + b'\x00')
             sum += length
+            l.seek(0,2)
+            return l.tell() - length
 
     #import in PIDS
     with open('Assets/PIDS.csv', 'r') as f:
@@ -103,23 +96,33 @@ def r_dispos(filename, args, index):
                     #print("\n" + format(mapblock))
                     charid = format(mapblock[4:8])
                     string = readuntilnull(filename, toaddress(charid))
-                    charcheck = False
+                    print(string)
 
+                    charext = False
+                    classstr = b''
+                    newjob = ""
                     for char in index:
-                        if string == char[0]: #does the character match an already randomized one?
-                            charcheck = True
-                            binary_file.seek(binary_file.tell() - 104, 0)
-                            binary_file.read(4)
-                            appendtoend(filename, char[1])
-                            addr = findstring(char[1]) + 32
-                            print(bytes(addr))
-                            binary_file.write(bytes(addr))
+                        if string == char[0]:
+                            newjob = char[1]
+                            newadd = appendtoend(filename, char[1], filesize) - 32
+                            classstr = struct.pack(">l",newadd)
+                            print(classstr)
+                            charext = True
 
+                    if charext:
+                        #write class
+                        binary_file.seek(binary_file.tell()-104,0)
+                        binary_file.read(4)
+                        binary_file.write(classstr)
 
+                        #jump back
+                        binary_file.seek(96,1)
+                        #OKAY FINALLY
+                        print(newjob)
+                    else:
+                        classid = format(mapblock[8:12])
+                        print(readuntilnull(filename, toaddress(classid)))
 
-                    #OKAY FINALLY
-                    classid = format(mapblock[8:12])
-                    print(readuntilnull(filename, toaddress(classid)))
                     #Weapons
                     wep1 = format(mapblock[36:40])
                     print(readuntilnull(filename, toaddress(wep1)))

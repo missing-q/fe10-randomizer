@@ -8,9 +8,9 @@ import randomizedispos
 import randomizedata
 
 def randomizer(path, seed, args):
-    character_index = randomizedata.randomizedata(args)
-    randomizetest.r_dispos(path + "/zmap/bmap0101/dispos_n.bin", args, character_index)
-    
+    character_index = randomizedata.randomizedata(path, seed, args)
+    randomizedispos.r_dispos(path + "/zmap/bmap0101/dispos_n.bin", args, character_index)
+
     #walk through every dispos file in dir
     '''
     for subdir, dirs, files in os.walk(path):
