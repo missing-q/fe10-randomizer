@@ -113,13 +113,13 @@ def randomizedata(file, seed, args):
             for j in JIDS:
                 if j[0] == newjob:
                     jobstr = bytes.fromhex(j[4])
-                    index = JIDS.index(j)
-                    print(index)
-                    print(Weps[index])
-                    if Weps[index] == []:
+                    nindex = JIDS.index(j)
+                    print(nindex)
+                    print(Weps[nindex])
+                    if Weps[nindex] == []:
                         chararray.append("")
                     else:
-                        chararray.append(Weps[index][0])
+                        chararray.append(Weps[nindex][0])
 
             binary_file.seek(index + 16)
             binary_file.write(jobstr)
@@ -136,6 +136,8 @@ def randomizedata(file, seed, args):
                 temp = i + random.randint(-1 * mod, mod)
                 if temp < 0:
                     temp = 0
+                if temp > 255:
+                    temp = 0;
                 print(temp)
                 gtemp.append(temp)
             print(gtemp)
