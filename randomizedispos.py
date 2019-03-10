@@ -110,6 +110,9 @@ def r_dispos(filename, args, index):
                             print(classstr)
                             charext = True
 
+                            #write weapon
+                            
+
                     if charext:
                         #write class
                         binary_file.seek(binary_file.tell()-104,0)

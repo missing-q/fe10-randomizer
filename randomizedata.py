@@ -37,6 +37,10 @@ def randomizedata(file, seed, args):
         reader = csv.reader(f)
         IIDS = list(reader)
 
+    with open('Assets/Weapons.csv', 'r') as f:
+        reader = csv.reader(f)
+        Weps = list(reader)
+
     random.seed(seed)
     print(args)
     var = int(args["Variance"]) / 100
@@ -109,6 +113,9 @@ def randomizedata(file, seed, args):
             for j in JIDS:
                 if j[0] == newjob:
                     jobstr = bytes.fromhex(j[4])
+                    index = JIDS.index(j)
+                    wep = Weps[index][0]
+                    returnval.append(b[2], wep)
             binary_file.seek(index + 16)
             binary_file.write(jobstr)
 
