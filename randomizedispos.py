@@ -102,6 +102,9 @@ def r_dispos(filename, args, index):
                     charext = False
                     classstr = b''
                     newjob = ""
+                    wepstr = b''
+                    newwep = ""
+
                     for char in index:
                         if string == char[0]:
                             newjob = char[1]
@@ -110,8 +113,10 @@ def r_dispos(filename, args, index):
                             print(classstr)
                             charext = True
 
-                            #write weapon
-                            
+                            newwep = char[2]
+                            addwep = appendtoend(filename, char[2]) - 32
+                            wepstr = struct.pack(">l", addwep)
+
 
                     if charext:
                         #write class
@@ -119,8 +124,14 @@ def r_dispos(filename, args, index):
                         binary_file.read(8)
                         binary_file.write(classstr) #count as indexing 4 bytes, remember
 
-                        #jump back
-                        binary_file.seek(92,1)
+                        if newwep != "" or " ":
+                            binary_file.read(28)
+                            binary_file.write(wepstr)
+                            binary_file.seek(60,1)
+                        else:
+                            #jump back
+                            binary_file.seek(92,1)
+
                         #OKAY FINALLY
                         print(newjob)
                     else:

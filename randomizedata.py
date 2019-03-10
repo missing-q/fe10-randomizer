@@ -75,7 +75,7 @@ def randomizedata(file, seed, args):
             job = charblock[16:20]
             newjob = ""
             #print(job)
-
+            chararray = [b[0]]
             for j in JIDS:
                 if format(job) == j[4]:
                     print("\nClass: " + j[0])
@@ -87,7 +87,7 @@ def randomizedata(file, seed, args):
                                 newjob = random.choice(first_tier)
 
                             print(newjob)
-                            returnval.append([b[0], newjob])
+                            chararray.append(newjob)
 
                     for q in second_tier:
                         if j[0] == q:
@@ -96,7 +96,7 @@ def randomizedata(file, seed, args):
                                 newjob = random.choice(second_tier)
 
                             print(newjob)
-                            returnval.append([b[0], newjob])
+                            chararray.append(newjob)
 
                     for q in third_tier:
                         if j[0] == q:
@@ -105,7 +105,7 @@ def randomizedata(file, seed, args):
                                 newjob = random.choice(first_tier)
 
                             print(newjob)
-                            returnval.append([b[0], newjob])
+                            chararray.append(newjob)
                     break #just so it doesn't iterate over the entire JIDS file lol
 
             jobstr = b''
@@ -114,10 +114,17 @@ def randomizedata(file, seed, args):
                 if j[0] == newjob:
                     jobstr = bytes.fromhex(j[4])
                     index = JIDS.index(j)
-                    wep = Weps[index][0]
-                    returnval.append(b[2], wep)
+                    print(index)
+                    print(Weps[index])
+                    if Weps[index] == []:
+                        chararray.append("")
+                    else:
+                        chararray.append(Weps[index][0])
+
             binary_file.seek(index + 16)
             binary_file.write(jobstr)
+
+            returnval.append(chararray)
 
             print("\nGROWTHS")
             print("-------------------")
