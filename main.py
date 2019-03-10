@@ -58,7 +58,10 @@ class Main(QWidget):
         def grab():
             print(btn2.text())
             randomize.randomizer(file, btn2.text(), {'Variance': btn5.text(), 'Lords': btn6.isChecked(), 'Skills' : btn7.isChecked(), 'Stats': btn8.isChecked(), 'Effects': btn9.isChecked()})
-
+            msg = QMessageBox()
+            msg.setText("Randomization complete!")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
         btn3.clicked.connect(grab) #VERY DANGEROUS
 
         #GUI Stuff
