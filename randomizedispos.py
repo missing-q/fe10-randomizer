@@ -125,9 +125,9 @@ def r_dispos(filename, args, index):
                         binary_file.write(classstr) #count as indexing 4 bytes, remember
 
                         if newwep != "" or " ":
-                            binary_file.read(28)
+                            binary_file.read(24)
                             binary_file.write(wepstr)
-                            binary_file.seek(60,1)
+                            binary_file.seek(64,1)
                         else:
                             #jump back
                             binary_file.seek(92,1)
