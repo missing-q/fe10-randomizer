@@ -15,12 +15,21 @@ def randomizedata(file, seed, args):
 
     banned_classes = ['JID_LION', 'JID_LION_GI', 'JID_LION_CA', 'JID_TIGER', 'JID_CAT', 'JID_CAT_F', 'JID_WOLF', 'JID_WOLF_F', 'JID_HAWK', 'JID_HAWK_TI', 'JID_CROW', 'JID_CROW_F', 'JID_CROW_NA', 'JID_EGRET', 'JID_EGRET_RA', 'JID_EGRET_LE', 'JID_REDDRAGON', 'JID_REDDRAGON_F', 'JID_WHITEDRAGON', 'JID_BLACKDRAGON', 'JID_BLACKDRAGON_KU', 'JID_SPIRIT_F', 'JID_SPIRIT_S', 'JID_SPIRIT_W', 'JID_GODDESS_AURA', 'JID_GODDESS']
 
+    #beast classes & corresponding transformation values, converted to hex strings for my and everyone's sanity
+    beast_classes = ['JID_BEASTTRIBE_T','JID_BEASTTRIBE_C','JID_BEASTTRIBE_C/F', 'JID_BEASTTRIBE_W','JID_BIRDTRIBE_H','JID_BIRDTRIBE_C','JID_BIRDTRIBE_C/F','JID_PRINCEEGRET','JID_PRINCEEGRET_RA','JID_PRINCESSEGRET','JID_DRAGONTRIBE_R','JID_DRAGONTRIBE_R/F','JID_DRAGONTRIBE_W','JID_DRAGONKING','JID_DRAGONPRINCE']
+
     #format output funct
     def format(bytestring):
         hex = str(binascii.hexlify(bytestring), 'ascii')
         formatted_hex = ' '.join(hex[i:i+2] for i in range(0, len(hex), 2))
         formatted_hex = formatted_hex.upper()
         return(formatted_hex)
+
+    def sign_int(int):
+        if int > 127:
+            return int-256
+        else:
+            return int
 
     #read in PIDs list
     with open('Assets/PIDS.csv', 'r') as f:

@@ -10,6 +10,12 @@ def format(bytestring):
     formatted_hex = formatted_hex.upper()
     return(formatted_hex)
 
+def sign_int(int):
+    if int > 127:
+        return int-256
+    else:
+        return int
+
 #read in PIDs list
 with open('Assets/PIDS.csv', 'r') as f:
     reader = csv.reader(f)
@@ -55,18 +61,24 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
         print("-------------------")
         growths = bytearray(charblock[length-13:length-5])
         for i in growths:
-            if i > 127:
-                print(i-256)
-            else:
-                print(i)
+            print(sign_int(i))
 
         print("\nSTATS")
         print("-------------------")
         stats = bytearray(charblock[length-23:length-13])
         for i in stats:
-            if i > 127:
-                print(i-256)
-            else:
-                print(i)
+            print(sign_int(i))
 
+        #transformation gauge nonsense
+        un_turn = charblock[length-27]
+        un_battle = charblock[length-26]
+        tr_turn = charblock[length-25]
+        tr_battle = charblock[length-24]
+
+        print("\nTRANSFORMATION GAUGE")
+        print("-------------------")
+        print(sign_int(un_turn))
+        print(sign_int(un_battle))
+        print(sign_int(tr_turn))
+        print(sign_int(tr_battle))
         #print(format(charblock))

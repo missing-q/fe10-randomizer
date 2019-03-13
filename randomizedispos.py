@@ -36,6 +36,12 @@ def r_dispos(filename, args, index):
             l.seek(0,2)
             return l.tell() - length
 
+    def sign_int(int):
+        if int > 127:
+            return int-256
+        else:
+            return int
+
     #import in PIDS
     with open('Assets/PIDS.csv', 'r') as f:
         reader = csv.reader(f)
