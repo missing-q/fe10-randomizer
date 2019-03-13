@@ -6,6 +6,7 @@ import struct
 import io
 import randomizedispos
 import randomizedata
+import genhtml
 
 diff = ["c", "h", "n"]
 def randomizer(path, seed, args):
@@ -16,14 +17,6 @@ def randomizer(path, seed, args):
         for d in diff:
             randomizedispos.r_dispos(path + "/zmap/bmap01" + str(i).zfill(2) + "/dispos_" + d + ".bin", args, character_index)
 
-    #walk through every dispos file in dir
-    '''
-    for subdir, dirs, files in os.walk(path):
-        for file in files:
-            #print os.path.join(subdir, file)
-            filepath = subdir + os.sep + file
-            if filepath.endswith(".bin"):
-                print(filepath)
-                #randomizedispos.r_dispos(filepath, args, character_index)
-
-    '''
+    #generate HTML table of character/class info
+    if args["HTML"] == True:
+        genhtml.gen(character_index)
