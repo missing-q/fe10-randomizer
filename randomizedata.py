@@ -147,7 +147,7 @@ def randomizedata(file, seed, args):
                 print(temp)
                 stemp.append(temp)
             print(stemp)
-            chararray.append(gtemp)
+            chararray.append(stemp)
             binary_file.seek(index + (length-23), 0)
             binary_file.write(bytearray(stemp))
             #print(format(charblock))
