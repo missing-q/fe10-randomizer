@@ -77,8 +77,5 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
 
         print("\nTRANSFORMATION GAUGE")
         print("-------------------")
-        print(sign_int(un_turn))
-        print(sign_int(un_battle))
-        print(sign_int(tr_turn))
-        print(sign_int(tr_battle))
+        print(format(charblock[length-27:length-23]))
         #print(format(charblock))
