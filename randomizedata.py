@@ -5,7 +5,7 @@ def randomizedata(file, seed, args):
     from itertools import repeat
     import binascii
     import random
-    from staticrand import *
+    from staticrand import first_tier, second_tier, third_tier, beast_classes, transformations
 
     #format output funct
     def format(bytestring):
@@ -228,7 +228,7 @@ def randomizedata(file, seed, args):
                 binary_file.seek(index + (length-27))
                 binary_file.write(transformations[tr_ind])
                 print("Character assigned proper transformation gauge")
-                
+
         #Item stuff
         binary_file.seek(0, 0)
         print("WEAPON RANDOMIZATIONS")
