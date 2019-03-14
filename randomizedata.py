@@ -113,8 +113,6 @@ def randomizedata(file, seed, args):
             binary_file.seek(index + 16)
             binary_file.write(jobstr)
 
-            returnval.append(chararray)
-
             print("\nGROWTHS")
             print("-------------------")
             growths = bytearray(charblock[length-13:length-5])
@@ -126,10 +124,11 @@ def randomizedata(file, seed, args):
                 if temp < 0:
                     temp = 0
                 if temp > 255:
-                    temp = 0;
+                    temp = 0
                 print(temp)
                 gtemp.append(temp)
             print(gtemp)
+            chararray.append(gtemp)
             binary_file.seek(index + (length-13), 0)
             binary_file.write(bytearray(gtemp))
 
@@ -143,15 +142,28 @@ def randomizedata(file, seed, args):
                 temp = i + random.randint(-1 * mod, mod)
                 if temp < 0:
                     temp = 0
-                if temp > 255:
-                    temp = 0;
+                if temp > 127:
+                    temp = 0
                 print(temp)
                 stemp.append(temp)
             print(stemp)
+            chararray.append(gtemp)
             binary_file.seek(index + (length-23), 0)
             binary_file.write(bytearray(stemp))
             #print(format(charblock))
 
+            #Transformation gauge stuff
+            for i in beast_classes:
+                if newjob == i:
+                    tr_ind = beast_classes.index(newjob)
+                    binary_file.seek(index + (length-27))
+                    binary_file.write(transformations[tr_ind])
+                    print("Character assigned proper transformation gauge")
+            if not newjob in beast_classes:
+                binary_file.seek(index + (length-27))
+                binary_file.write(b'\x00\x00\x00\x00')
+
+            returnval.append(chararray)
 
         #CLASS STUFF
         binary_file.seek(0, 0)
@@ -221,14 +233,6 @@ def randomizedata(file, seed, args):
             print(gtemp)
             binary_file.seek(index + (length-16), 0)
             binary_file.write(bytearray(gtemp))
-
-            #Transformation gauge stuff
-            for i in beast_classes:
-                if newjob == i:
-                    tr_ind = beast_classes.index(newjob)
-                    binary_file.seek(index + (length-27))
-                    binary_file.write(transformations[tr_ind])
-                    print("Character assigned proper transformation gauge")
 
         #Item stuff
         binary_file.seek(0, 0)
