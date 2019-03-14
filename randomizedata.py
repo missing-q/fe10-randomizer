@@ -223,11 +223,12 @@ def randomizedata(file, seed, args):
             binary_file.write(bytearray(gtemp))
 
             #Transformation gauge stuff
-            if newjob in beast_classes:
-                tr_ind = beast_classes.index(newjob)
-                binary_file.seek(index + (length-27))
-                binary_file.write(transformations[tr_ind])
-                print("Character assigned proper transformation gauge")
+            for i in beast_classes:
+                if newjob == i:
+                    tr_ind = beast_classes.index(newjob)
+                    binary_file.seek(index + (length-27))
+                    binary_file.write(transformations[tr_ind])
+                    print("Character assigned proper transformation gauge")
 
         #Item stuff
         binary_file.seek(0, 0)

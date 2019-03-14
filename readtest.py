@@ -2,6 +2,7 @@
 import csv
 from itertools import repeat
 import binascii
+from staticrand import beast_classes
 
 #format output funct
 def format(bytestring):
