@@ -7,40 +7,7 @@ def r_dispos(filename, args, index):
     import os
     import struct
     import io
-
-    #format output funct
-    def format(bytestring):
-        hex = str(binascii.hexlify(bytestring), 'ascii')
-        formatted_hex = ' '.join(hex[i:i+2] for i in range(0, len(hex), 2))
-        formatted_hex = formatted_hex.upper()
-        return(formatted_hex)
-
-    #converts hex strings into an address the reader can check
-    def toaddress(str):
-        val = int("0x" + str.replace(" ", ""),16) + 32 #adding offset nonsense
-        return val
-
-    #reads until the next x00 byte, helpful for grabbing stuff from addresses
-    def readuntilnull(rfile, addr):
-        with open(rfile, 'rb') as l:
-            l.seek(addr,0)
-            s = l.read()
-            index = int(s.find(b'\x00'))
-            return s[0:index].decode("ascii")
-
-    def appendtoend(rfile, label):
-        with open(rfile, 'ab+') as l:
-            l.seek(0,2)
-            length = len(label.encode("utf8")) + 1
-            l.write(bytes(label, "ascii") + b'\x00')
-            l.seek(0,2)
-            return l.tell() - length
-
-    def sign_int(int):
-        if int > 127:
-            return int-256
-        else:
-            return int
+    from staticrand import first_tier, second_tier, third_tier, beast_classes, transformations, format, sign_int, parse_wepstring, toaddress, readuntilnull, appendtoend
 
     #import in PIDS
     with open('Assets/PIDS.csv', 'r') as f:

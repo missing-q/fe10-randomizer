@@ -5,20 +5,8 @@ def randomizedata(file, seed, args):
     from itertools import repeat
     import binascii
     import random
-    from staticrand import first_tier, second_tier, third_tier, beast_classes, transformations
-
-    #format output funct
-    def format(bytestring):
-        hex = str(binascii.hexlify(bytestring), 'ascii')
-        formatted_hex = ' '.join(hex[i:i+2] for i in range(0, len(hex), 2))
-        formatted_hex = formatted_hex.upper()
-        return(formatted_hex)
-
-    def sign_int(int):
-        if int > 127:
-            return int-256
-        else:
-            return int
+    #python won't let you import all outside of the module level, so this is what you get
+    from staticrand import first_tier, second_tier, third_tier, beast_classes, transformations, format, sign_int, parse_wepstring, toaddress, readuntilnull, appendtoend, wepslist
 
     #read in PIDs list
     with open('Assets/PIDS.csv', 'r') as f:
