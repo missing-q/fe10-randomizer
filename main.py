@@ -49,17 +49,20 @@ class Main(QWidget):
         group2 = QGroupBox("Options", self)
         btn10 = QCheckBox("Lock characters to class tier")
         btn11 = QCheckBox("Add nonplayables to class pool with randomized weapons")
+        btn13 = QCheckBox("Randomize Weapon Triangle")
+        btn13.setToolTip("Why would you do this")
         btn12 = QCheckBox("Generate HTML file")
 
         layout2 = QVBoxLayout(self)
         layout2.addWidget(btn10)
         layout2.addWidget(btn11)
+        layout2.addWidget(btn13)
         layout2.addWidget(btn12)
         group2.setLayout(layout2)
 
         def grab():
             print(btn2.text())
-            randomize.randomizer(file, btn2.text(), {'Variance': btn5.text(), 'Lords': btn6.isChecked(), 'Skills' : btn7.isChecked(), 'Stats': btn8.isChecked(), 'Effects': btn9.isChecked(), 'HTML': btn12.isChecked()})
+            randomize.randomizer(file, btn2.text(), {'Variance': btn5.text(), 'Lords': btn6.isChecked(), 'Skills' : btn7.isChecked(), 'Stats': btn8.isChecked(), 'Effects': btn9.isChecked(), 'HTML': btn12.isChecked(), 'WTA': btn13.isChecked()})
             msg = QMessageBox()
             msg.setText("Randomization complete!")
             msg.setStandardButtons(QMessageBox.Ok)

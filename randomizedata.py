@@ -222,6 +222,9 @@ def randomizedata(file, seed, args):
             binary_file.seek(index + (length-16), 0)
             binary_file.write(bytearray(gtemp))
 
+            #skills time bb
+            
+
         #Item stuff
         binary_file.seek(0, 0)
         print("WEAPON RANDOMIZATIONS")
@@ -266,6 +269,16 @@ def randomizedata(file, seed, args):
                     print(stats)
                     binary_file.seek(index + 40)
                     binary_file.write(bytearray(stats))
+
+        #WTA stuff
+        binary_file.seek(0, 0)
+        print("WTA RANDOMIZATIONS")
+        print("##################################################")
+        print("##################################################")
+        if args['WTA'] == True:
+            #why would you do this
+            pass
+
 
 
         #Misc: Zero out all instances of "EVENT-CC"

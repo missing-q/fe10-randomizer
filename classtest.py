@@ -2,17 +2,17 @@
 import csv
 from itertools import repeat
 import binascii
-
-#format output funct
-def format(bytestring):
-    hexstring = binascii.hexlify(bytestring).decode('ascii')
-    escapecodes = map(''.join, zip(repeat(r' '), *[iter(hexstring)]*2))
-    print("'", *escapecodes, "'", sep='')
+from staticrand import format, toaddress_n
 
 #read in JIDs list
 with open('Assets/JIDS.csv', 'r') as f:
   reader = csv.reader(f)
   JIDS = list(reader)
+
+#read in JIDs list
+with open('Assets/SIDS.csv', 'r') as f:
+    reader = csv.reader(f)
+    SIDS = list(reader)
 
 #Weapon ranks list
 #JID row layout:
@@ -93,5 +93,16 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
         if charblock.find(b'\x00\x03\x38\x36') != -1:
             print("Transformed class")
             banned_classes.append(b[0])
-            
-    print(banned_classes)
+
+        skillnum = int((length - 100)/4)
+        skills = charblock[60:60+(skillnum * 4)]
+        print(format(skills))
+        for i in range(skillnum):
+            poin = i * 4
+            ind_skill = skills[poin:poin+4]
+
+            for q in SIDS:
+                if toaddress_n(format(ind_skill)) == int(q[3],16):
+                    #print(q[3])
+                    #print(ind_skill)
+                    print(q[0])

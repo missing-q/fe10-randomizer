@@ -2,7 +2,7 @@
 import csv
 from itertools import repeat
 import binascii
-from staticrand import beast_classes
+from staticrand import beast_classes, toaddress_n
 
 #format output funct
 def format(bytestring):
@@ -26,6 +26,10 @@ with open('Assets/PIDS.csv', 'r') as f:
 with open('Assets/JIDS.csv', 'r') as f:
      reader = csv.reader(f)
      JIDS = list(reader)
+
+with open('Assets/SIDS.csv', 'r') as f:
+     reader = csv.reader(f)
+     SIDS = list(reader)
 
 #PID row layout:
     #row[0] = PID_LABEL, to be printed out with the rest of the block information
@@ -79,4 +83,22 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
         print("\nTRANSFORMATION GAUGE")
         print("-------------------")
         print(format(charblock[length-27:length-23]))
+
+        print("\nSKILLS")
+        print("-------------------")
+
+        skillnum = int((length - 80)/4)
+        #print(skillnum)
+        skills = charblock[28:28+(skillnum * 4)]
+        #print(format(skills))
+        for i in range(skillnum):
+            poin = i * 4
+            ind_skill = skills[poin:poin+4]
+
+            for q in SIDS:
+                if toaddress_n(format(ind_skill)) == int(q[3],16):
+                    #print(q[3])
+                    #print(ind_skill)
+                    print(q[0])
+
         #print(format(charblock))

@@ -43,6 +43,11 @@ def toaddress(str):
     val = int("0x" + str.replace(" ", ""),16) + 32 #adding offset nonsense
     return val
 
+#w/o offset nonsense
+def toaddress_n(str):
+    val = int("0x" + str.replace(" ", ""),16)
+    return val
+
 #reads until the next x00 byte, helpful for grabbing stuff from addresses
 def readuntilnull(rfile, addr):
     with open(rfile, 'rb') as l:
