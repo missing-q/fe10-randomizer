@@ -1,9 +1,9 @@
 #this reads the flags from an item and dumps them to output.
 import csv
-from itertools import repeat
+from itertools import repeat, groupby
 import binascii
 import sys
-from staticrand import toaddress_n, format, readuntilnull_raw
+from staticrand import toaddress, format, readuntilnull_jis
 
 #format output funct
 
@@ -39,7 +39,7 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
 
     '''
     flaglist = []
-    '''
+
     for b in IIDS:
         #Grab classblock
         index = int(b[1], 16)
@@ -60,18 +60,8 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
             ind_flag = format(flags[poin:poin+4])
 
             if ind_flag[:5] == "00 03":
-                flaglist.append(readuntilnull_jis("Test-Files/FE10Data.cms.decompressed", toaddress(ind_flag)))
+                flaglist.append([readuntilnull_jis("Test-Files/FE10Data.cms.decompressed", toaddress(ind_flag)), "0x" + ind_flag.replace(" ", ""]))
 
                 print(ind_flag)
             #newflag = toaddress_n(format(ind_flag))
-        '''
-    str = b'\x83\x65\x83\x42\x83\x6F\x81\x5B\x83\x93\x91\xE0'.decode("shift-jis")
-    print(str.encode("utf-8"))
-    #thonk = readuntilnull_raw("Test-Files/FE10Data.cms.decompressed", 213839)
-    #print(thonk)
-    #try:
-        #print(thonk.decode("ascii"))
-    #except UnicodeDecodeError:
-        #print("whoops")
-        #print(thonk.decode("shift-jis"))
-    #print(flaglist)
+    print(flaglist)
