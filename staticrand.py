@@ -56,6 +56,29 @@ def readuntilnull(rfile, addr):
         index = int(s.find(b'\x00'))
         return s[0:index].decode("ascii")
 
+#intsys why
+#for when there's suddenly shift-jis in the mix for no goddamn reason
+def readuntilnull_jis(rfile, addr):
+    with open(rfile, 'rb') as l:
+        l.seek(addr,0)
+        s = l.read()
+        index = int(s.find(b'\x00'))
+
+        val = ""
+        try:
+            val = s[0:index].decode("ascii")
+        except UnicodeDecodeError:
+            val = s[0:index].decode("shift-jis")
+
+        return val
+#no encoding bullshit, we die like men
+def readuntilnull_raw(rfile, addr):
+    with open(rfile, 'rb') as l:
+        l.seek(addr,0)
+        s = l.read()
+        index = int(s.find(b'\x00'))
+        return s[0:index]
+
 def appendtoend(rfile, label):
     with open(rfile, 'ab+') as l:
         l.seek(0,2)
