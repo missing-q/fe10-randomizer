@@ -39,6 +39,9 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
 
     '''
     flaglist = []
+    addrlist = []
+    flaglist_n = []
+    addrlist_n = []
 
     for b in IIDS:
         #Grab classblock
@@ -60,8 +63,18 @@ with open("Test-Files/FE10Data.cms.decompressed", "rb") as binary_file:
             ind_flag = format(flags[poin:poin+4])
 
             if ind_flag[:5] == "00 03":
-                flaglist.append([readuntilnull_jis("Test-Files/FE10Data.cms.decompressed", toaddress(ind_flag)), "0x" + ind_flag.replace(" ", ""]))
+                flaglist.append(readuntilnull_jis("Test-Files/FE10Data.cms.decompressed", toaddress(ind_flag)))
+                addrlist.append("0x" + ind_flag.replace(" ", ""))
 
                 print(ind_flag)
             #newflag = toaddress_n(format(ind_flag))
-    print(flaglist)
+for i in flaglist:
+    if i not in flaglist_n:
+        flaglist_n.append(i)
+
+for i in addrlist:
+    if i not in addrlist_n:
+        addrlist_n.append(i)
+
+print(flaglist_n)
+print(addrlist_n)
