@@ -16,6 +16,10 @@ def randomizer(path, seed, args):
     for i in range(1,12):
         for d in diff:
             randomizedispos.r_dispos(path + "/zmap/bmap01" + str(i).zfill(2) + "/dispos_" + d + ".bin", args, character_index)
+    #randomize part 2???
+    for i in range(1,6):
+        for d in diff:
+            randomizedispos.r_dispos(path + "/zmap/bmap02" + str(i).zfill(2) + "/dispos_" + d + ".bin", args, character_index)
 
     #generate HTML table of character/class info
     if args["HTML"] == True:
