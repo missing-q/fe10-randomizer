@@ -113,10 +113,6 @@ def r_dispos(filename):
                     wep4 = format(mapblock[68:72])
                     print(readuntilnull(filename, toaddress(wep4)))
 
-print("CHAPTER 1")
-print("-----------------------------------------")
-r_dispos("Test-Files/zmap/bmap0101/dispos_n.bin")
-
 print("CHAPTER 2")
 print("-----------------------------------------")
 r_dispos("Test-Files/zmap/bmap0102/dispos_n.bin")
