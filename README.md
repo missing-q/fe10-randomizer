@@ -2,6 +2,8 @@
 A WIP randomizer for the game Fire Emblem: Radiant Dawn for the Wii. FE10 Randomizer is currently **semifunctional** and randomizes your ROM up to the end of Part 1. I've only tested FE10-Randomizer on NTSC v1.01 ROMs of Radiant Dawn, and can't guarantee it'll work on any other region/version type.
 
 ## How to use fe10-randomizer
+*Requirements: Python 3.6+, PyQt5. If you don't have PyQt5, you can easily install it from pip.*
+
 1. Obtain an ISO of FE10. I'd recommend making a backup copy, just in case.
 2. Extract the ISO to some folder on your computer. I recommend personally recommend using [WiBaFu](https://sourceforge.net/projects/wiibafu/) for all of the ISO management (unpacking/repacking) stuff you'll need to do, but you can also extract your ISO using other programs, such as Dolphin. Just to be safe, make a backup of this folder.
 3. Open BatchLZ77, also in the provided Tools folder, and decrypt the **FE10Data.cms** file, found in the "DATA/files/" directory, from the ISO's root folder. This will save as **FE10Data.cms.decompressed** - leave it as is for now.
