@@ -13,7 +13,8 @@ banned_classes = ['JID_LION', 'JID_LION_GI', 'JID_LION_CA', 'JID_TIGER', 'JID_CA
 #beast classes & corresponding transformation values, converted to hex strings for my and everyone's sanity
 beast_classes = ['JID_BEASTTRIBE_T','JID_BEASTTRIBE_C','JID_BEASTTRIBE_C/F', 'JID_BEASTTRIBE_W', 'JID_QUEENWOLF','JID_BIRDTRIBE_H', 'JID_KINGHAWK','JID_BIRDTRIBE_C','JID_BIRDTRIBE_C/F', 'JID_KINGCROW','JID_PRINCEEGRET','JID_PRINCEEGRET_RA','JID_PRINCESSEGRET','JID_DRAGONTRIBE_R','JID_DRAGONTRIBE_R/F','JID_DRAGONTRIBE_W','JID_DRAGONKING','JID_DRAGONPRINCE']
 transformations = [b'\x08\x0F\xFC\xFD', b'\x0A\x0F\xFB\xFC', b'\x0A\x0F\xFB\xFC', b'\x06\x0A\xFC\xFD', b'\x06\x0A\xFC\xFD',b'\x08\x0F\xFC\xFD', b'\x08\x0F\xFC\xFD',b'\x06\x0A\xFC\xFD',b'\x06\x0A\xFC\xFD', b'\x06\x0A\xFC\xFD',b'\x04\x0A\xFB\xFA',b'\x03\x06\xFB\xF8',b'\x03\x08\xFB\xF8', b'\x05\x06\xFE\xFF', b'\x05\x06\xFE\xFF', b'\x04\x05\xFE\xFF', b'\x05\x06\xFE\xFF', b'\x05\x06\xFE\xFF']
-
+#sword, axe, lance, elemental, light, dark, flame, wind, thunder
+wep_binlist = [b'\x00\x03\x42\xD0', b'\x00\x03\x3A\x7B', b'\x00\x03\x41\xF5', b'\x00\x03\x41\x60', b'\x00\x03\x41\xFB', b'\x00\x03\x41\x5B', b'\x00\x03\x41\xA9', b'\x00\x03\x43\x2A',b'\x00\x03\x42\xDD']
 #Because Radiant Dawn is whack with how it handles weapon ranks
 def parse_wepstring(string):
     weplist = ["Sword", "Lance", "Axe" , "Bow", "Knife", "Strike", "Fire", "Thunder", "Wind", "Light", "Dark", "Staff"]

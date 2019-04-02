@@ -6,7 +6,7 @@ def randomizedata(file, seed, args):
     import binascii
     import random
     #python won't let you import all outside of the module level, so this is what you get
-    from staticrand import first_tier, second_tier, third_tier, beast_classes, transformations, format, sign_int, parse_wepstring, toaddress, readuntilnull, appendtoend, wepslist
+    from staticrand import first_tier, second_tier, third_tier, beast_classes, transformations, format, sign_int, parse_wepstring, toaddress, readuntilnull, appendtoend, wepslist, wep_binlist
 
     #read in PIDs list
     with open('Assets/PIDS.csv', 'r') as f:
@@ -223,7 +223,7 @@ def randomizedata(file, seed, args):
             binary_file.write(bytearray(gtemp))
 
             #skills time bb
-            
+
 
         #Item stuff
         binary_file.seek(0, 0)
@@ -277,7 +277,23 @@ def randomizedata(file, seed, args):
         print("##################################################")
         if args['WTA'] == True:
             #why would you do this
-            pass
+
+            #WTA is laid out in the format first_type, second_type, mt+, hit+
+            #                              [4 bytes, 4 bytes, 2 bytes, 2 bytes]
+            binary_file.seek(160804, 0)
+            mod = round(i * var)
+
+            for i in range(13):
+                index = i * 12
+
+                binary_file.write(random.choice(wep_binlist)) #write first wep
+                binary_file.write(random.choice(wep_binlist)) #write second
+                mt_add = abs(sign_int(binary_file.read(2)) + random.randint(-1 * mod, mod))
+                hit_add = abs(sign_int(binary_file.read(2)) + random.randint(-1 * mod, mod))
+
+                binary_file.seek(160804 + index + 8, 0)
+                binary_file.write(mt_add)
+                binary_file.write(hit_add)
 
 
 
