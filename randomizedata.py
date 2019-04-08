@@ -23,6 +23,11 @@ def randomizedata(file, seed, args):
         reader = csv.reader(f)
         IIDS = list(reader)
 
+    #
+    with open('Assets/SIDS.csv', 'r') as f:
+         reader = csv.reader(f)
+         SIDS = list(reader)
+
     with open('Assets/Weapons.csv', 'r') as f:
         reader = csv.reader(f)
         Weps = list(reader)
@@ -181,6 +186,8 @@ def randomizedata(file, seed, args):
                 temp = i + random.randint(-1 * mod, mod)
                 if temp < 0:
                     temp = 0
+                if temp > 255:
+                    temp = 255
                 print(temp)
                 ctemp.append(temp)
             binary_file.seek(index + (length-32), 0)
@@ -198,7 +205,7 @@ def randomizedata(file, seed, args):
                 if temp < 0:
                     temp = 0
                 if temp > 255:
-                    temp = 0;
+                    temp = 0
                 print(temp)
                 stemp.append(temp)
             print(stemp)
@@ -223,7 +230,18 @@ def randomizedata(file, seed, args):
             binary_file.write(bytearray(gtemp))
 
             #skills time bb
+            #gonna do character skills for now, idk about class skills
+            '''
+            skillnum = int((length - 80)/4)
+            binary_file.seek(index + 28)
+            for i in range(skillnum):
+                poin = i * 4
+                ind_skill = skills[poin:poin+4]
 
+                for q in SIDS:
+                    if toaddress_n(format(ind_skill)) == int(q[3],16):
+                        newskill = random.choice(list(SIDS))
+            '''
 
         #Item stuff
         binary_file.seek(0, 0)
