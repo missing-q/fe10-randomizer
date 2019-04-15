@@ -158,6 +158,31 @@ def randomizedata(file, seed, args):
 
             returnval.append(chararray)
 
+            #skills time bb
+            #gonna do character skills for now, idk about class skills
+
+            skillnum = int((length - 80)/4)
+            skills = charblock[28:28+(skillnum * 4)]
+            print(format(skills))
+            print(skillnum)
+            binary_file.seek(index + 28)
+            for i in range(skillnum):
+                poin = i * 4
+                ind_skill = skills[poin:poin+4]
+                new_skill = random.choice(SIDS)
+                print("Entering skills thing")
+                print(new_skill)
+                for ind, q in enumerate(SIDS):
+                    if q[4] == format(ind_skill):
+                        print("hell yeah")
+                        if ind > 61 and SIDS.indexOf(new_skill) > 61:
+                            print("new skill is" + q[0])
+                            print(bytes.fromhex(q[4]))
+                            binary_file.write(bytes.fromhex(q[4]))
+                        else:
+                            binary_file.read(4)
+                        break
+
         #CLASS STUFF
         binary_file.seek(0, 0)
         print("CLASS RANDOMIZATIONS")
@@ -228,20 +253,6 @@ def randomizedata(file, seed, args):
             print(gtemp)
             binary_file.seek(index + (length-16), 0)
             binary_file.write(bytearray(gtemp))
-
-            #skills time bb
-            #gonna do character skills for now, idk about class skills
-            '''
-            skillnum = int((length - 80)/4)
-            binary_file.seek(index + 28)
-            for i in range(skillnum):
-                poin = i * 4
-                ind_skill = skills[poin:poin+4]
-
-                for q in SIDS:
-                    if toaddress_n(format(ind_skill)) == int(q[3],16):
-                        newskill = random.choice(list(SIDS))
-            '''
 
         #Item stuff
         binary_file.seek(0, 0)
