@@ -1,4 +1,4 @@
-def gen(index):
+def gen(index, path):
     #create html file
     message = ""
 
@@ -14,5 +14,5 @@ def gen(index):
 
         message += "</table>"
 
-    with open('output.html', 'w') as f:
+    with open(path + 'output.html', 'w') as f:
         f.write("<!DOCTYPE html><html><body>" + message + "</body></html>")

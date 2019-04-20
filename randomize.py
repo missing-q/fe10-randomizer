@@ -23,4 +23,4 @@ def randomizer(path, seed, args):
 
     #generate HTML table of character/class info
     if args["HTML"] == True:
-        genhtml.gen(character_index)
+        genhtml.gen(character_index, path)

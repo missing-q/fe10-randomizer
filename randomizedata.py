@@ -318,8 +318,8 @@ def randomizedata(file, seed, args):
 
                 binary_file.write(random.choice(wep_binlist)) #write first wep
                 binary_file.write(random.choice(wep_binlist)) #write second
-                mt_add = abs(sign_int(binary_file.read(2)) + random.randint(-1 * mod, mod))
-                hit_add = abs(sign_int(binary_file.read(2)) + random.randint(-1 * mod, mod))
+                mt_add = abs(sign_int(int(binary_file.read(2), 16)) + random.randint(-1 * mod, mod))
+                hit_add = abs(sign_int(int(binary_file.read(2), 16)) + random.randint(-1 * mod, mod))
 
                 binary_file.seek(160804 + index + 8, 0)
                 binary_file.write(mt_add)
